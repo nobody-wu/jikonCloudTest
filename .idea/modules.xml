@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/jikonCloudTest.iml" filepath="$PROJECT_DIR$/jikonCloudTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jiKonCloud_1.iml" filepath="$PROJECT_DIR$/jiKonCloud_1.iml" />
     </modules>
   </component>
 </project>
