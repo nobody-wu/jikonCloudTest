@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jikon.domain.dao.usermanage.UserRoleMapDao">
+
+	<resultMap id="userRoleMap" type="cn.jikon.domain.entity.managesystem.UserRoleMap">
+		<result property="no" column="use_no" />
+		<result property="id" column="use_id" />
+		<result property="userId" column="use_user_id" />
+		<result property="roleId" column="use_role_id"/>
+		<result property="describe" column="use_describe"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		use_no, use_id, use_user_id, use_role_id, use_describe
+	</sql>
+
+	<insert id="addUserRoleMap">
+		<if test="null != roleIdList and roleIdList.size() > 0">
+			<foreach collection="roleIdList" item="item">
+				insert into user_role_map (use_id, use_user_id, use_role_id)
+				values (#{useId}, #{useUserId}, #{item});
+			</foreach>
+		</if>
+
+	</insert>
+	
+	<select id="getUserRoleMapCount" resultType="java.lang.Integer">
+		select count(use_no) from user_role_map
+	</select>
+	
+	<delete id="deleteUserRoleMapByUseId">
+		<if test="null != useRoleIdList and useRoleIdList.size() > 0">
+		delete from user_role_map
+		where use_user_id = #{useUserId}
+			and use_role_id IN
+			<foreach collection="useRoleIdList" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</delete>
+	
+	<delete id="deleteUserRoleMapByRolIdList">
+		delete from user_role_map
+		where use_role_id = #{roleId}
+	</delete>
+	
+	<update id="updateUserRoleMapByUseId">
+		UPDATE user_role_map set
+		use_user_id = #{useUserId},
+		use_role_id = #{useRoleId},
+		use_describe = #{useDescribe}
+		where use_id = #{useId}
+	</update>
+
+	<select id="getsByRolId" resultMap="userRoleMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from user_role_map
+		where use_role_id = #{roleId}
+	</select>
+
+	<select id="getByUserIdAndRolId" resultMap="userRoleMap">
+		select
+		<include refid="Base_Column_List"/>
+		from user_role_map
+		where use_user_id = #{userId} and use_role_id = #{roleId}
+	</select>
+
+	<select id="getRolIdListByUserId" resultType="java.lang.String">
+		select use_role_id
+		from user_role_map
+		where use_user_id = #{userId}
+	</select>
+
+	<select id="getListRoleIdByUserId" resultType="java.lang.String">
+		select use_role_id from user_role_map where use_user_id = #{useUserId}
+	</select>
+
+</mapper>

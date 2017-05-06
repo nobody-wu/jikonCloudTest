@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jikon.domain.dao.module.ModuleDao">
+<resultMap id="moduleResultMap" type="cn.jikon.domain.entity.module.Module">
+    <result property="id" column="mod_id"/>
+    <result property="name" column="mod_name"/>
+    <result property="describe" column="mod_describe"/>
+</resultMap>
+
+    <sql id="Base_Column_List">
+        mod_id,mod_name,mod_describe
+    </sql>
+
+    <select id="getModule" parameterType="string" resultMap="moduleResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM module
+        WHERE mod_id=#{moduleId};
+    </select>
+
+    <select id="getModuleByName" parameterType="string" resultMap="moduleResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM module
+        WHERE mod_name=#{name};
+    </select>
+
+    <insert id="addModule" parameterType="string">
+        INSERT INTO module (mod_id,mod_name,mod_describe) VALUES (#{moduleId},#{name},#{describe})
+    </insert>
+
+    <delete id="delModuleById" parameterType="string">
+        DELETE FROM module WHERE mod_id = #{moduleId}
+    </delete>
+
+    <update id="updateModule" parameterType="string">
+        UPDATE module SET mod_name=#{name},mod_describe=#{describe}
+        WHERE mod_id=#{moduleId}
+    </update>
+
+    <select id="getModuleCount" resultType="int">
+        SELECT COUNT(mod_no) FROM module;
+    </select>
+
+    <select id="getModuleList" resultMap="moduleResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM module
+        LIMIT #{start,jdbcType=NUMERIC},
+        #{pageCount,jdbcType=NUMERIC}
+    </select>
+
+    <select id="getListAllModule" resultMap="moduleResultMap">
+        select <include refid="Base_Column_List"/>
+        FROM module
+    </select>
+
+    <select id="getListModuleIdList" resultMap="moduleResultMap">
+        select <include refid="Base_Column_List"/>
+        FROM module
+        where 1=1
+        <if test="null != list and list.size() > 0">
+            and mod_id in
+            <foreach collection="list" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+</mapper>

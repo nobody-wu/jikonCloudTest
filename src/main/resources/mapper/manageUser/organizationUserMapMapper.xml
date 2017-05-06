@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jikon.domain.dao.usermanage.OrganizationUserMapDao">
+
+    <resultMap id="orgMap" type="cn.jikon.domain.entity.user.OrganizationUserMap">
+        <result property="id" column="org_id"/>
+        <result property="organizationId" column="org_organization_Id"/>
+        <result property="userId" column="org_user_id"/>
+        <result property="describe" column="org_describe"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+          org_id, org_organization_Id, org_user_id, org_describe
+    </sql>
+
+    <insert id="addOrganizationUserMap">
+          INSERT INTO organization_user_map
+          (org_id, org_user_id, org_describe, org_organization_id)
+          VALUES
+          (#{id}, #{userId}, #{describe}, #{organizationId})
+    </insert>
+
+    <delete id="delOrganizationUserMapByUserId">
+          DELETE FROM organization_user_map WHERE org_user_id = #{userId};
+     </delete>
+
+    <delete id="delOrganizationUserMapByOrganizationId">
+          DELETE FROM organization_user_map WHERE org_organization_Id = #{organizationId};
+    </delete>
+
+    <update id="updateOrganizationUserMapByUserId">
+          UPDATE organization_user_map SET org_organization_Id=#{organizationId}
+          WHERE org_user_id=#{userId}
+    </update>
+
+    <select id="getUserIdListByOrganizationId" resultType="string">
+        SELECT org_user_id FROM organization_user_map WHERE org_organization_Id = #{organizationId}
+    </select>
+
+    <select id="getUserCountByOrganizationId" resultType="int">
+        SELECT COUNT(org_no) FROM organization_user_map WHERE org_organization_Id = #{organizationId}
+    </select>
+</mapper> 

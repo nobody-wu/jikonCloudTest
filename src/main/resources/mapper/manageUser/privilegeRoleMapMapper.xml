@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jikon.domain.dao.usermanage.PrivilegeRoleMapDao">
+
+	<resultMap id="BaseResult" type="cn.jikon.domain.entity.managesystem.PrivilegeRoleMap">
+		<result property="no" column="pri_no" />
+		<result property="id" column="pri_id"/>
+		<result property="roleId" column="pri_role_id" />
+		<result property="privilegeId" column="pri_privilege_id"/>
+		<result property="describe" column="pri_describe"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		pri_no, pri_id, pri_role_id, pri_privilege_id, pri_describe
+	</sql>
+
+	<select id="getPrivilegeRoleMapByPriId" resultMap="BaseResult">
+		select 
+		<include refid="Base_Column_List"/>
+		from privilege_role_map
+		where pri_privilege_id = #{priId}
+	</select>
+
+	<select id="getPrivilegeRoleMapByRolId" resultMap="BaseResult">
+		select
+		<include refid="Base_Column_List"/>
+		from privilege_role_map
+		where pri_role_id = #{priRoleId}
+	</select>
+
+	<delete id="deletePriRoleMapInfoByIdList">
+		delete from privilege_role_map
+		where 1=1
+		<if test="null != priId">
+			and pri_privilege_id = #{priId}
+		</if>
+		<if test="null != roleId">
+			and pri_role_id = #{roleId}
+		</if>
+	</delete>
+
+	<select id="getPrivilegeRoleMapCount" resultType="java.lang.Integer">
+		select count(pri_no) from privilege_role_map
+	</select>
+	
+	<delete id="deletePrivilegeRoleMapByPriId">
+		<if test="null != privilegeIdList and privilegeIdList.size() > 0">
+			delete from privilege_role_map
+			where pri_role_id = #{priRoleId} and pri_privilege_id in
+				<foreach collection="privilegeIdList" item="item" open="(" separator="," close=")">
+					 #{item}
+				</foreach>
+		</if>
+	</delete>
+	
+	<insert id="addPrivilegeRoleMap">
+		insert into privilege_role_map(pri_id, pri_role_id, pri_privilege_id)
+		values
+		<foreach collection="params" item="_itemKey" separator=",">
+			  (#{_itemKey.priId}, #{_itemKey.roleId}, #{_itemKey.privilegeId})
+		</foreach>
+	</insert>
+
+	<update id="updatePrivilegeRoleMapByPriId">
+		update into privilege_role_map
+		set pri_id = #{priId}, pri_role_id = #{priRoleId},
+			pri_privilege_id = #{priPrivilegeId}, pri_describe = #{priDescribe}
+	</update>
+
+	<select id="getByPriIdAndRolId" resultMap="BaseResult">
+		select
+		<include refid="Base_Column_List"/>
+		from privilege_role_map
+		where pri_role_id = #{roleId} and pri_privilege_id = #{priId}
+	</select>
+
+	<select id="getListPriIdByRoleId" resultType="java.lang.String">
+		select pri_privilege_id from privilege_role_map where pri_role_id = #{priRoleId}
+	</select>
+	
+</mapper>

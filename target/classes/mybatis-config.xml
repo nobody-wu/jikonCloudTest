@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 命名空间 -->
+	<mappers>
+		<mapper resource="mapper/user/userMapper.xml" />
+		<mapper resource="mapper/user/userDetailMapper.xml" />
+		<mapper resource="mapper/manageUser/manageUserMapper.xml" />
+		<mapper resource="mapper/manageUser/privilegeMapper.xml"/>
+		<mapper resource="mapper/manageUser/roleMapper.xml"/>
+		<mapper resource="mapper/manageUser/userRoleMapMapper.xml"/>
+		<mapper resource="mapper/manageUser/privilegeRoleMapMapper.xml"/>
+		<mapper resource="mapper/manageUser/modulePrivilegeMapMapper.xml"/>
+		<mapper resource="mapper/manageUser/organizationMapper.xml"/>
+		<mapper resource="mapper/manageUser/organizationMapMapper.xml"/>
+		<mapper resource="mapper/manageUser/organizationUserMapMapper.xml"/>
+		<mapper resource="mapper/module/moduleMapper.xml"/>
+		<mapper resource="mapper/module/subsystemModuleMapMapper.xml"/>
+		<mapper resource="mapper/supermanageUser/subSystemMapper.xml"/>
+		<mapper resource="mapper/manageUser/manageSystemModuleMap.xml"/>
+	</mappers>
+</configuration>

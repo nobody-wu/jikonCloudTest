@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jikon.domain.dao.usermanage.OrganizationDao">
+
+    <resultMap id="orgMap" type="cn.jikon.domain.entity.managesystem.Organization">
+        <result property="id" column="org_id"/>
+        <result property="name" column="org_name"/>
+        <result property="level" column="org_level"/>
+        <result property="describe" column="org_describe"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        org_id,org_name,org_level,org_describe
+    </sql>
+
+    <select id="getOrganizationById" parameterType="java.lang.String" resultMap="orgMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM organization
+        WHERE org_id=#{organizationId};
+    </select>
+
+    <select id="getOrganizationByName" parameterType="string" resultMap="orgMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM organization
+        WHERE org_name=#{name}
+    </select>
+
+    <delete id="delOrganizationById" parameterType="String">
+        DELETE FROM organization WHERE org_id=#{organizationId}
+   </delete>
+
+    <insert id="addOrganization" parameterType="Organization">
+        INSERT INTO organization (org_id,org_name) VALUES (#{id},#{name})
+    </insert>
+
+    <update id="updateOrganization" parameterType="Organization">
+        UPDATE organization SET org_name=#{name},org_level=#{level}
+        WHERE org_id=#{id}
+    </update>
+
+</mapper> 

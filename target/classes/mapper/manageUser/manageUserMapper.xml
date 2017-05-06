@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jikon.domain.dao.usermanage.ManageUserDao">
+	
+	<resultMap id="BaseResultMap" type="cn.jikon.domain.entity.managesystem.ManageUser">
+		<result property="id" column="man_id" />
+		<result property="account" column="man_account" />
+		<result property="password" column="man_password" />
+		<result property="type" column="man_type" />
+		<result property="useName" column="man_name" />
+		<result property="status" column="man_status"/>
+	</resultMap>
+
+	<sql id="BaseColumns">
+		man_id,man_account,man_password,man_type,man_name,man_status
+	</sql>
+
+	<insert id="registerManagerUser" parameterType="ManageUser" > 
+    	INSERT INTO manage_user(man_id,man_account,man_password,man_name) VALUES
+    	(#{id},#{account},#{password},#{useName})  
+    </insert>
+    
+    <update id="activationManageUserApply"  parameterType="String">
+	 	UPDATE manage_user SET man_status='1'
+	 	WHERE man_id=#{manageUserId}
+	</update>
+
+	<select id="getManageUserById" parameterType="string" resultMap="BaseResultMap">
+		SELECT
+		<include refid="BaseColumns"/>
+		FROM manage_user
+		WHERE man_id = #{manageUserId} AND man_status=1
+	</select>
+
+    <select id="getManageUserByAccount" resultMap="BaseResultMap">
+        SELECT
+		<include refid="BaseColumns"/>
+		FROM manage_user
+		WHERE man_account = #{account}
+    </select>
+    
+    <select id="getManageUserCount" resultType="java.lang.Integer">
+		SELECT COUNT(man_no) FROM manage_user
+	</select>
+	
+	<select id="getManageUserList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="BaseColumns"/>
+		FROM manage_user
+		LIMIT #{start,jdbcType=NUMERIC},
+		#{pageCount,jdbcType=NUMERIC}
+	</select>
+
+	<update id="updateManagerPassword" parameterType="string">
+		UPDATE manage_user SET man_password=#{password} WHERE man_id=#{manageUserId}
+	</update>
+</mapper> 
