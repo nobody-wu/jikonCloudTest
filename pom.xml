@@ -24,23 +24,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<!-- 主要管理依赖的部署:希望在编译期间以及测试阶段jdk，容器或者使用者能够提供这个依赖
-			 	避免了此类构件当部署到目标容器后产生包依赖冲突。
-			 	只在编译跟测试的时候用，打包之后我们用的是服务器的容器，这个就不用打包了，以免依赖冲突-->
-			<!--<scope>provided</scope>-->
-        </dependency>
-			<!--<exclusions>-->
-				<!--<exclusion>-->
-					<!--<groupId>org.springframework.boot</groupId>-->
-					<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-				<!--</exclusion>-->
-			<!--</exclusions>-->
-
-
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,11 +38,15 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
+		<!-- 主要管理依赖的部署:希望在编译期间以及测试阶段jdk，容器或者使用者能够提供这个依赖
+			 	避免了此类构件当部署到目标容器后产生包依赖冲突。
+			 	只在编译跟测试的时候用，打包之后我们用的是服务器的容器，这个就不用打包了，以免依赖冲突-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -150,26 +144,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>cn.jikon</groupId>
-			<artifactId>jiKonCloud_1</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
-			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-war-plugin</artifactId>-->
-				<!--&lt;!&ndash; 更改命名 &ndash;&gt;-->
-				<!--<configuration>-->
-					<!--<warName>ROOT</warName>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>ROOT</warName>
+				</configuration>
 			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.springframework.boot</groupId>-->
+				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 </project>
