@@ -18,7 +18,7 @@ public class Application extends SpringBootServletInitializer {
      * @param args
      */
     public static void main(String[] args){
-        //todo 测试注解
+        //todo 测试github
         SpringApplication.run(Application.class, args);
     }
 
