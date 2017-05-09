@@ -17,7 +17,8 @@ public class Application extends SpringBootServletInitializer {
      * SpringBoot启动服务
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        //todo 测试注解
         SpringApplication.run(Application.class, args);
     }
 
